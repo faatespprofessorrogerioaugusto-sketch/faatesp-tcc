@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { TccDocument, FontType, UserProfile } from './types';
-import { getEmptyTccDocument, initialTccDocument } from './data/defaultDoc';
+import { TccDocument, FontType, UserProfile, ThemeMode } from './types';
+import { getEmptyTccDocument } from './data/defaultDoc';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
 import { PreTextualEditor } from './components/PreTextualEditor';
@@ -15,6 +15,10 @@ import { downloadTccPdf } from './utils/pdfExport';
 export default function App() {
   const [doc, setDoc] = useState<TccDocument>(getEmptyTccDocument());
   const [activeTab, setActiveTab] = useState<string>('login');
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    const savedTheme = localStorage.getItem('tcc_theme_mode');
+    return (savedTheme === 'light' || savedTheme === 'dark') ? savedTheme : 'dark';
+  });
 
   // Google User Auth State
   const [user, setUser] = useState<UserProfile>({
@@ -37,6 +41,21 @@ export default function App() {
     currentText: '',
   });
 
+  // Sync theme with HTML root class and localStorage
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('tcc_theme_mode', theme);
+  }, [theme]);
+
+  const handleToggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
   // Initialize application - ALWAYS start at the Login screen first
   useEffect(() => {
     setActiveTab('login');
@@ -44,7 +63,6 @@ export default function App() {
     if (savedUser) {
       try {
         const parsedUser: UserProfile = JSON.parse(savedUser);
-        // Keep name and email for convenience, but require logging in
         setUser({
           name: parsedUser.name || '',
           email: parsedUser.email || '',
@@ -105,14 +123,6 @@ export default function App() {
     if (existingDoc) {
       try {
         const parsed = JSON.parse(existingDoc);
-        if (parsed?.preTextual?.autor && (parsed.preTextual.autor.includes('ROGERIO') || parsed.preTextual.autor.includes('ROGÉRIO'))) {
-          parsed.preTextual.autor = '';
-        }
-        if (parsed?.chapters && Array.isArray(parsed.chapters)) {
-          parsed.chapters = parsed.chapters
-            .filter((c: any) => c.title?.trim().toUpperCase() !== 'REVISÃO DA LITERATURA')
-            .map((c: any, idx: number) => ({ ...c, number: idx + 1 }));
-        }
         setDoc(parsed);
       } catch (e) {
         setDoc(getEmptyTccDocument());
@@ -156,7 +166,7 @@ export default function App() {
 
   const handleDirectDownloadPdf = async () => {
     try {
-      await downloadTccPdf(doc);
+      await downloadTccPdf(doc, user.name);
     } catch (err) {
       console.error('Erro ao gerar o download do PDF:', err);
       alert('Não foi possível gerar o PDF. Verifique se os dados estão preenchidos.');
@@ -169,10 +179,10 @@ export default function App() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      const cleanTitle = (doc.preTextual.titulo?.trim() || 'TCC')
-        .replace(/[/\\?%*:|"<>]/g, '_')
-        .trim();
-      a.download = `${cleanTitle}_ABNT.docx`;
+      const studentName = (doc.preTextual.autor?.trim() || user.name?.trim() || 'Aluno')
+        .replace(/[/\\?%*:|"<>]/g, '')
+        .trim() || 'Aluno';
+      a.download = `TCC FAATESP - ${studentName}.docx`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -184,7 +194,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 font-sans text-slate-900 flex flex-col selection:bg-blue-500 selection:text-white">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 flex flex-col selection:bg-blue-500 selection:text-white transition-colors duration-200">
       {/* Top Navigation Header */}
       <Header
         fontType={doc.fontType}
@@ -196,6 +206,8 @@ export default function App() {
         onExportPdf={handleDirectDownloadPdf}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       {/* Main Container */}

@@ -91,22 +91,22 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
     new Paragraph({
       alignment: AlignmentType.CENTER,
       spacing: { before: 240, after: 120 },
-      children: [new TextRun({ text: preTextual.instituicao.toUpperCase(), font, size: 24, bold: true })],
+      children: [new TextRun({ text: (preTextual.instituicao || '').toUpperCase(), font, size: 24, bold: true })],
     }),
     new Paragraph({
       alignment: AlignmentType.CENTER,
       spacing: { before: 0, after: 1440 },
-      children: [new TextRun({ text: preTextual.curso.toUpperCase(), font, size: 24 })],
+      children: [new TextRun({ text: (preTextual.curso || '').toUpperCase(), font, size: 24 })],
     }),
     new Paragraph({
       alignment: AlignmentType.CENTER,
       spacing: { before: 720, after: 1440 },
-      children: [new TextRun({ text: preTextual.autor.toUpperCase(), font, size: 24, bold: true })],
+      children: [new TextRun({ text: (preTextual.autor || '').toUpperCase(), font, size: 24, bold: true })],
     }),
     new Paragraph({
       alignment: AlignmentType.CENTER,
       spacing: { before: 1440, after: 240 },
-      children: [new TextRun({ text: preTextual.titulo.toUpperCase(), font, size: 28, bold: true })],
+      children: [new TextRun({ text: (preTextual.titulo || 'TRABALHO DE CONCLUSÃO DE CURSO').toUpperCase(), font, size: 28, bold: true })],
     })
   );
 
@@ -125,7 +125,7 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
       alignment: AlignmentType.CENTER,
       spacing: { before: 2160, after: 0 },
       children: [
-        new TextRun({ text: `${preTextual.cidade.toUpperCase()}\n${preTextual.ano}`, font, size: 24, bold: true }),
+        new TextRun({ text: `${(preTextual.cidade || '').toUpperCase()}\n${preTextual.ano || ''}`, font, size: 24, bold: true }),
       ],
     })
   );
@@ -138,12 +138,12 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
     new Paragraph({
       alignment: AlignmentType.CENTER,
       spacing: { before: 240, after: 1440 },
-      children: [new TextRun({ text: preTextual.autor.toUpperCase(), font, size: 24, bold: true })],
+      children: [new TextRun({ text: (preTextual.autor || '').toUpperCase(), font, size: 24, bold: true })],
     }),
     new Paragraph({
       alignment: AlignmentType.CENTER,
       spacing: { before: 1440, after: 1440 },
-      children: [new TextRun({ text: preTextual.titulo.toUpperCase(), font, size: 28, bold: true })],
+      children: [new TextRun({ text: (preTextual.titulo || 'TRABALHO DE CONCLUSÃO DE CURSO').toUpperCase(), font, size: 28, bold: true })],
     }),
     // Natureza do trabalho (indent 8 cm left, font 10pt, single line spacing)
     new Paragraph({
@@ -152,7 +152,7 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
       spacing: { line: 240, before: 1440, after: 360 }, // single spacing = 240
       children: [
         new TextRun({
-          text: preTextual.naturezaTrabalho,
+          text: preTextual.naturezaTrabalho || '',
           font,
           size: 20, // 10pt
         }),
@@ -163,7 +163,7 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
       indent: { left: 4535 },
       spacing: { line: 240, before: 120, after: 1440 },
       children: [
-        new TextRun({ text: `Orientador: ${preTextual.orientador}`, font, size: 20, bold: true }),
+        new TextRun({ text: `Orientador: ${preTextual.orientador || ''}`, font, size: 20, bold: true }),
         preTextual.coorientador
           ? new TextRun({ text: `\nCoorientador: ${preTextual.coorientador}`, font, size: 20 })
           : new TextRun({ text: '' }),
@@ -173,7 +173,7 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
       alignment: AlignmentType.CENTER,
       spacing: { before: 1440, after: 0 },
       children: [
-        new TextRun({ text: `${preTextual.cidade.toUpperCase()}\n${preTextual.ano}`, font, size: 24, bold: true }),
+        new TextRun({ text: `${(preTextual.cidade || '').toUpperCase()}\n${preTextual.ano || ''}`, font, size: 24, bold: true }),
       ],
     })
   );
@@ -293,12 +293,12 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
     new Paragraph({
       alignment: AlignmentType.CENTER,
       spacing: { before: 240, after: 720 },
-      children: [new TextRun({ text: preTextual.autor.toUpperCase(), font, size: 24, bold: true })],
+      children: [new TextRun({ text: (preTextual.autor || '').toUpperCase(), font, size: 24, bold: true })],
     }),
     new Paragraph({
       alignment: AlignmentType.CENTER,
       spacing: { before: 720, after: 720 },
-      children: [new TextRun({ text: preTextual.titulo.toUpperCase(), font, size: 24, bold: true })],
+      children: [new TextRun({ text: (preTextual.titulo || 'TRABALHO DE CONCLUSÃO DE CURSO').toUpperCase(), font, size: 24, bold: true })],
     }),
     new Paragraph({
       alignment: AlignmentType.CENTER,
@@ -307,7 +307,13 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
     })
   );
 
-  preTextual.membrosBanca.forEach((m) => {
+  const bancaMembers = (preTextual.membrosBanca && preTextual.membrosBanca.length > 0)
+    ? preTextual.membrosBanca
+    : [
+        { id: '1', name: preTextual.orientador || 'Prof. Orientador', title: 'Orientador - Presidente', institution: preTextual.instituicao || '' },
+      ];
+
+  bancaMembers.forEach((m) => {
     preTextualChildren.push(
       new Paragraph({
         alignment: AlignmentType.CENTER,
@@ -332,14 +338,14 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
     new Paragraph({
       alignment: AlignmentType.JUSTIFIED,
       spacing: { line: 240, before: 120, after: 240 }, // single spacing
-      children: [new TextRun({ text: preTextual.resumo.texto, font, size: 24 })],
+      children: [new TextRun({ text: preTextual.resumo?.texto || '', font, size: 24 })],
     }),
     new Paragraph({
       alignment: AlignmentType.JUSTIFIED,
       spacing: { before: 240, after: 240 },
       children: [
         new TextRun({ text: 'Palavras-chave: ', font, size: 24, bold: true }),
-        new TextRun({ text: preTextual.resumo.palavrasChave.join(' '), font, size: 24 }),
+        new TextRun({ text: (preTextual.resumo?.palavrasChave || []).join(' '), font, size: 24 }),
       ],
     })
   );
@@ -355,14 +361,14 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
     new Paragraph({
       alignment: AlignmentType.JUSTIFIED,
       spacing: { line: 240, before: 120, after: 240 },
-      children: [new TextRun({ text: preTextual.abstract.texto, font, size: 24 })],
+      children: [new TextRun({ text: preTextual.abstract?.texto || '', font, size: 24 })],
     }),
     new Paragraph({
       alignment: AlignmentType.JUSTIFIED,
       spacing: { before: 240, after: 240 },
       children: [
         new TextRun({ text: 'Keywords: ', font, size: 24, bold: true }),
-        new TextRun({ text: preTextual.abstract.keywords.join(' '), font, size: 24 }),
+        new TextRun({ text: (preTextual.abstract?.keywords || []).join(' '), font, size: 24 }),
       ],
     })
   );
@@ -377,25 +383,25 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
     })
   );
 
-  chapters.forEach((ch, idx) => {
+  (chapters || []).forEach((ch) => {
     preTextualChildren.push(
       new Paragraph({
         alignment: AlignmentType.LEFT,
         tabStops: [{ type: TabStopType.RIGHT, position: TabStopPosition.MAX, leader: 'dot' as any }],
         spacing: { before: 120, after: 120 },
         children: [
-          new TextRun({ text: `${ch.number} ${ch.title.toUpperCase()}`, font, size: 24, bold: true }),
+          new TextRun({ text: `${ch.number} ${(ch.title || '').toUpperCase()}`, font, size: 24, bold: true }),
         ],
       })
     );
-    ch.subsections.forEach((sub) => {
+    (ch.subsections || []).forEach((sub) => {
       preTextualChildren.push(
         new Paragraph({
           alignment: AlignmentType.LEFT,
           indent: { left: 360 },
           spacing: { before: 60, after: 60 },
           children: [
-            new TextRun({ text: `${sub.number} ${sub.title}`, font, size: 24 }),
+            new TextRun({ text: `${sub.number} ${sub.title || ''}`, font, size: 24 }),
           ],
         })
       );
@@ -413,22 +419,22 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
   // Section 2: Textual Elements (CHAPTERS) -> Header includes Arabic Page Numbers on Top Right!
   const textualChildren: Paragraph[] = [];
 
-  chapters.forEach((ch, idx) => {
+  (chapters || []).forEach((ch, idx) => {
     if (idx > 0) {
       textualChildren.push(new Paragraph({ pageBreakBefore: true }));
     }
 
-    textualChildren.push(createHeading(`${ch.number} ${ch.title}`));
+    textualChildren.push(createHeading(`${ch.number} ${ch.title || ''}`));
 
     // Split paragraphs
-    const paragraphs = ch.content.split('\n\n').filter(Boolean);
+    const paragraphs = (ch.content || '').split('\n\n').filter(Boolean);
     paragraphs.forEach((pText) => {
       textualChildren.push(createNormalParagraph(pText));
     });
 
-    ch.subsections.forEach((sub) => {
-      textualChildren.push(createSubHeading(sub.number, sub.title));
-      const subParagraphs = sub.content.split('\n\n').filter(Boolean);
+    (ch.subsections || []).forEach((sub) => {
+      textualChildren.push(createSubHeading(sub.number, sub.title || ''));
+      const subParagraphs = (sub.content || '').split('\n\n').filter(Boolean);
       subParagraphs.forEach((spText) => {
         textualChildren.push(createNormalParagraph(spText));
       });
@@ -440,13 +446,13 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
   textualChildren.push(createHeading('REFERÊNCIAS'));
 
   // Sort references alphabetically
-  const sortedRefs = [...references].sort((a, b) => a.autor.localeCompare(b.autor));
+  const sortedRefs = [...(references || [])].sort((a, b) => (a.autor || '').localeCompare(b.autor || ''));
   sortedRefs.forEach((ref) => {
     textualChildren.push(
       new Paragraph({
         alignment: AlignmentType.JUSTIFIED,
         spacing: { line: 240, before: 120, after: 240 }, // single spacing, space between entries
-        children: [new TextRun({ text: ref.formattedText, font, size: 24 })],
+        children: [new TextRun({ text: ref.formattedText || `${ref.autor}. ${ref.titulo}. ${ref.ano}`, font, size: 24 })],
       })
     );
   });

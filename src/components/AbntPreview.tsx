@@ -16,18 +16,18 @@ export const AbntPreview: React.FC<AbntPreviewProps> = ({ doc, onPrintPdf }) => 
   const fontClass = fontType === 'Arial' ? 'font-sans' : 'font-serif';
 
   return (
-    <div className="space-y-6 animate-fadeIn">
+    <div className="space-y-6 animate-fadeIn transition-colors duration-200">
       {/* Top Action Bar */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-blue-100 text-blue-700 rounded-xl">
+          <div className="p-2 bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 rounded-xl">
             <Eye className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-sm font-extrabold text-slate-900">
+            <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-100">
               Visualização A4 com Regra de Ouro ABNT NBR 14724
             </h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Margens: Sup. 3cm / Esq. 3cm / Inf. 2cm / Dir. 2cm • Fonte: {fontType} 12pt
             </p>
           </div>
@@ -55,7 +55,7 @@ export const AbntPreview: React.FC<AbntPreviewProps> = ({ doc, onPrintPdf }) => 
       </div>
 
       {/* Printable / Visual A4 Document Sheets Container */}
-      <div className="flex flex-col items-center space-y-8 py-4 bg-slate-200/70 p-4 sm:p-8 rounded-3xl overflow-x-auto print:bg-white print:p-0 print:space-y-0">
+      <div className="flex flex-col items-center space-y-8 py-4 bg-slate-200/70 dark:bg-slate-950 p-4 sm:p-8 rounded-3xl overflow-x-auto print:bg-white print:p-0 print:space-y-0 border border-transparent dark:border-slate-800/80">
         
         {/* SHEET 1: CAPA */}
         <div

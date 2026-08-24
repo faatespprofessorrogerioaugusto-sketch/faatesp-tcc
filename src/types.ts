@@ -1,4 +1,5 @@
 export type FontType = 'Arial' | 'Times New Roman';
+export type ThemeMode = 'light' | 'dark';
 
 export type ReferenceType = 'livro' | 'artigo' | 'site';
 

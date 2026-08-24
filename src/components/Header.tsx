@@ -1,6 +1,6 @@
 import React from 'react';
-import { FontType, UserProfile } from '../types';
-import { FileText, Download, User, LogIn, Sparkles, Settings2, FileCheck } from 'lucide-react';
+import { FontType, ThemeMode, UserProfile } from '../types';
+import { FileText, Download, User, LogIn, Sparkles, Settings2, FileCheck, Sun, Moon } from 'lucide-react';
 
 interface HeaderProps {
   fontType: FontType;
@@ -12,6 +12,8 @@ interface HeaderProps {
   onExportPdf: () => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  theme: ThemeMode;
+  onToggleTheme: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -24,13 +26,15 @@ export const Header: React.FC<HeaderProps> = ({
   onExportPdf,
   activeTab,
   setActiveTab,
+  theme,
+  onToggleTheme,
 }) => {
   return (
-    <header className="sticky top-0 z-40 bg-slate-900 border-b border-slate-800 text-white shadow-lg">
+    <header className="sticky top-0 z-40 bg-slate-900 border-b border-slate-800 text-white shadow-lg transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 gap-4 sm:gap-6">
+        <div className="flex items-center justify-between h-16 gap-3 sm:gap-4">
           {/* Brand */}
-          <div className="flex items-center space-x-3 shrink-0 mr-4">
+          <div className="flex items-center space-x-3 shrink-0 mr-2">
             <div className="bg-gradient-to-tr from-blue-600 to-indigo-500 p-2 rounded-xl shadow-md flex items-center justify-center">
               <FileText className="w-6 h-6 text-white" />
             </div>
@@ -103,7 +107,31 @@ export const Header: React.FC<HeaderProps> = ({
           )}
 
           {/* Right Actions */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* Theme Toggle Button (Claro / Escuro) */}
+            <button
+              type="button"
+              onClick={onToggleTheme}
+              className={`flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl border text-xs font-semibold transition-all duration-200 cursor-pointer select-none active:scale-95 ${
+                theme === 'dark'
+                  ? 'bg-slate-800 hover:bg-slate-700 text-amber-300 border-slate-700 shadow-sm'
+                  : 'bg-amber-400/20 hover:bg-amber-400/30 text-amber-200 border-amber-400/30'
+              }`}
+              title={theme === 'dark' ? 'Ativar Modo Claro' : 'Ativar Modo Escuro'}
+            >
+              {theme === 'dark' ? (
+                <>
+                  <Sun className="w-3.5 h-3.5 text-amber-400 animate-spin-slow" />
+                  <span className="hidden sm:inline text-slate-200">Claro</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-3.5 h-3.5 text-indigo-300" />
+                  <span className="hidden sm:inline text-slate-200">Escuro</span>
+                </>
+              )}
+            </button>
+
             {/* Font Toggle */}
             {user.isLoggedIn && (
               <div className="hidden lg:flex items-center space-x-2 bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700 text-xs text-slate-300">
@@ -112,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <select
                   value={fontType}
                   onChange={(e) => onFontChange(e.target.value as FontType)}
-                  className="bg-slate-900 text-white font-medium px-2 py-0.5 rounded border border-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 text-xs"
+                  className="bg-slate-900 text-white font-medium px-2 py-0.5 rounded border border-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 text-xs cursor-pointer"
                 >
                   <option value="Arial">Arial</option>
                   <option value="Times New Roman">Times New Roman</option>
@@ -122,24 +150,24 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Export Quick Buttons */}
             {user.isLoggedIn && (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1.5 sm:space-x-2">
                 <button
                   type="button"
                   onClick={onExportDocx}
-                  className="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-sm transition-all border border-blue-400/30 cursor-pointer"
+                  className="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-xs font-semibold px-2.5 sm:px-3 py-1.5 rounded-lg shadow-sm transition-all border border-blue-400/30 cursor-pointer"
                   title="Baixar arquivo DOCX formatado em ABNT"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>DOCX</span>
+                  <span className="hidden xs:inline">DOCX</span>
                 </button>
                 <button
                   type="button"
                   onClick={onExportPdf}
-                  className="flex items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-sm transition-all border border-emerald-400/30 cursor-pointer"
+                  className="flex items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-xs font-semibold px-2.5 sm:px-3 py-1.5 rounded-lg shadow-sm transition-all border border-emerald-400/30 cursor-pointer"
                   title="Baixar arquivo PDF formatado em ABNT"
                 >
                   <FileCheck className="w-3.5 h-3.5" />
-                  <span>PDF</span>
+                  <span className="hidden xs:inline">PDF</span>
                 </button>
               </div>
             )}
@@ -156,7 +184,7 @@ export const Header: React.FC<HeaderProps> = ({
                 {onLogout && (
                   <button
                     onClick={onLogout}
-                    className="ml-1 text-[11px] font-bold text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-2 py-0.5 rounded transition-all"
+                    className="ml-1 text-[11px] font-bold text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-2 py-0.5 rounded transition-all cursor-pointer"
                     title="Sair totalmente da conta"
                   >
                     Sair

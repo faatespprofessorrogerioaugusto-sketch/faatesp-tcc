@@ -68,14 +68,14 @@ export const LoginPage: React.FC<LoginPageProps> = ({
         </div>
 
         {/* Right Column - Dedicated Login Card */}
-        <div className="md:col-span-7 bg-white rounded-2xl shadow-2xl border border-slate-200 p-6 sm:p-8 space-y-6 relative overflow-hidden">
+        <div className="md:col-span-7 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 space-y-6 relative overflow-hidden">
           {/* Header */}
-          <div className="text-center space-y-2 border-b border-slate-100 pb-5">
-            <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto text-blue-600 shadow-sm">
+          <div className="text-center space-y-2 border-b border-slate-100 dark:border-slate-800 pb-5">
+            <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/60 rounded-2xl flex items-center justify-center mx-auto text-blue-600 dark:text-blue-400 shadow-sm">
               <ShieldCheck className="w-7 h-7" />
             </div>
-            <h2 className="text-2xl font-extrabold text-slate-900">Autenticação Google</h2>
-            <p className="text-xs text-slate-500">
+            <h2 className="text-2xl font-extrabold text-slate-900 dark:text-slate-100">Autenticação Google</h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Acesso seguro e personalizado ao TCC Maker
             </p>
           </div>
@@ -83,19 +83,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           {/* Logged In View */}
           {user.isLoggedIn ? (
             <div className="space-y-5">
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+              <div className="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-3">
                 <div className="flex items-center space-x-3">
                   <div className="w-12 h-12 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xl shadow-sm shrink-0">
                     {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                   </div>
                   <div className="space-y-0.5 overflow-hidden">
-                    <h4 className="text-base font-bold text-slate-900 truncate">{user.name || 'Usuário'}</h4>
-                    <p className="text-xs text-slate-500 truncate">{user.email}</p>
+                    <h4 className="text-base font-bold text-slate-900 dark:text-slate-100 truncate">{user.name || 'Usuário'}</h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{user.email}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2 text-xs text-emerald-700 bg-emerald-50 px-3 py-2 rounded-lg border border-emerald-200 font-medium">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                <div className="flex items-center space-x-2 text-xs text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-2 rounded-lg border border-emerald-200 dark:border-emerald-800 font-medium">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   <span>Sua conta está conectada e os dados estão salvos.</span>
                 </div>
               </div>
@@ -103,7 +103,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
               <div className="space-y-3">
                 <button
                   onClick={onNavigateDashboard}
-                  className="w-full flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-4 rounded-xl transition-all text-xs shadow-md"
+                  className="w-full flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-4 rounded-xl transition-all text-xs shadow-md cursor-pointer"
                 >
                   <span>Acessar Painel do TCC</span>
                   <ArrowRight className="w-4 h-4" />
@@ -111,13 +111,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
                 <button
                   onClick={onLogout}
-                  className="w-full flex items-center justify-center space-x-2 bg-red-50 hover:bg-red-100 text-red-700 font-bold py-3 px-4 rounded-xl border border-red-200 transition-all text-xs shadow-sm"
+                  className="w-full flex items-center justify-center space-x-2 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-700 dark:text-red-300 font-bold py-3 px-4 rounded-xl border border-red-200 dark:border-red-800 transition-all text-xs shadow-sm cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Sair Totalmente da Conta Google</span>
                 </button>
 
-                <p className="text-[11px] text-center text-slate-400">
+                <p className="text-[11px] text-center text-slate-400 dark:text-slate-500">
                   Ao deslogar, sua sessão é encerrada totalmente e os formulários ficam livres para nova conexão.
                 </p>
               </div>
@@ -125,12 +125,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           ) : (
             /* Logged Out View - Direct Google Login Form */
             <div className="space-y-5">
-              <div className="bg-amber-50 p-3.5 rounded-xl border border-amber-200 text-xs text-amber-900 space-y-1">
+              <div className="bg-amber-50 dark:bg-amber-950/50 p-3.5 rounded-xl border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-300 space-y-1">
                 <div className="flex items-center space-x-1.5 font-bold">
-                  <Sparkles className="w-4 h-4 text-amber-600" />
+                  <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <span>Sessão Livre para Conectar</span>
                 </div>
-                <p className="text-amber-800 text-[11px]">
+                <p className="text-amber-800 dark:text-amber-300 text-[11px]">
                   Informe seu nome e e-mail do Google para se conectar e iniciar ou continuar seu trabalho.
                 </p>
               </div>
@@ -138,7 +138,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-1">
                       Nome do Usuário / Acadêmico
                     </label>
                     <input
@@ -146,12 +146,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                       placeholder="Ex: Neymar Júnior"
                       value={customName}
                       onChange={(e) => setCustomName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 text-slate-700 font-normal"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 font-normal"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-1">
                       E-mail do Google (Gmail/Institucional) *
                     </label>
                     <input
@@ -160,14 +160,14 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                       placeholder="Ex: neymarjr@gmail.com"
                       value={customEmail}
                       onChange={(e) => setCustomEmail(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 text-slate-700 font-normal"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 font-normal"
                     />
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center space-x-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-4 rounded-xl transition-all text-xs shadow-md mt-2"
+                  className="w-full flex items-center justify-center space-x-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-4 rounded-xl transition-all text-xs shadow-md mt-2 cursor-pointer"
                 >
                   <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                     <path

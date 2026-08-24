@@ -6,7 +6,7 @@ import { calculateDocumentPageMap, getFichaCatalograficaContent } from './abntFo
  * Direct PDF Download generator for ABNT TCC document
  * Uses native jsPDF vector rendering for instant, lightweight, 100% reliable generation.
  */
-export async function downloadTccPdf(doc: TccDocument): Promise<void> {
+export async function downloadTccPdf(doc: TccDocument, authorFallback?: string): Promise<void> {
   const { preTextual, chapters, references, fontType } = doc;
   const pageMap = calculateDocumentPageMap(doc);
   const fichaData = getFichaCatalograficaContent(preTextual);
@@ -426,9 +426,9 @@ export async function downloadTccPdf(doc: TccDocument): Promise<void> {
     y += refLines.length * 5.5 + 4;
   });
 
-  const cleanTitle = (doc.preTextual.titulo?.trim() || 'TCC')
-    .replace(/[/\\?%*:|"<>]/g, '_')
-    .trim();
+  const studentName = (doc.preTextual.autor?.trim() || authorFallback?.trim() || 'Aluno')
+    .replace(/[/\\?%*:|"<>]/g, '')
+    .trim() || 'Aluno';
 
-  pdf.save(`${cleanTitle}_ABNT.pdf`);
+  pdf.save(`TCC FAATESP - ${studentName}.pdf`);
 }

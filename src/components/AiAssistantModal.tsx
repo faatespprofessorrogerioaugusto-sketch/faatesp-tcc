@@ -83,7 +83,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white w-full max-w-xl h-full shadow-2xl border-l border-slate-200 flex flex-col justify-between overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-xl h-full shadow-2xl border-l border-slate-200 dark:border-slate-800 flex flex-col justify-between overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-5 flex items-center justify-between border-b border-slate-800">
           <div className="flex items-center space-x-2.5">
@@ -99,7 +99,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1.5 rounded-xl transition-all"
+            className="text-slate-400 hover:text-white p-1.5 rounded-xl transition-all cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -108,27 +108,27 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
         {/* Scrollable Content */}
         <div className="p-6 space-y-6 overflow-y-auto flex-1">
           {/* Rules Banner */}
-          <div className="bg-blue-50 border border-blue-200 p-3.5 rounded-xl text-xs text-blue-900 space-y-1">
+          <div className="bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/80 p-3.5 rounded-xl text-xs text-blue-900 dark:text-blue-200 space-y-1">
             <p className="font-bold flex items-center space-x-1.5">
-              <BookOpen className="w-4 h-4 text-blue-600" />
+              <BookOpen className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               <span>Garantia de Norma Culta e Padrão ABNT</span>
             </p>
-            <p className="text-blue-800">
+            <p className="text-blue-800 dark:text-blue-300">
               A IA analisa e corrige automaticamente a ortografia, acentuação, gramática, concordância verbal e pontuação mantendo a linguagem formal acadêmica.
             </p>
           </div>
 
           {/* Current Text Context Info */}
           {currentText && (
-            <div className="space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
-              <span className="font-bold text-slate-700">Texto Atual a ser Corrigido ({currentText.length} caracteres):</span>
-              <p className="text-slate-600 line-clamp-3 italic">"{currentText}"</p>
+            <div className="space-y-1.5 bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/70 text-xs">
+              <span className="font-bold text-slate-700 dark:text-slate-300">Texto Atual a ser Corrigido ({currentText.length} caracteres):</span>
+              <p className="text-slate-600 dark:text-slate-400 line-clamp-3 italic">"{currentText}"</p>
             </div>
           )}
 
           {/* Prompt Guidelines Input */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-800">
+            <label className="text-xs font-bold text-slate-800 dark:text-slate-200">
               Instruções para a Correção Ortográfica e Gramatical
             </label>
             <textarea
@@ -136,13 +136,13 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
               value={guidelines}
               onChange={(e) => setGuidelines(e.target.value)}
               placeholder="Ex: Corrigir erros ortográficos, revisar pontuação e ajustar a concordância verbal..."
-              className="w-full text-xs p-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 leading-relaxed text-slate-700 font-normal"
+              className="w-full text-xs p-3.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 leading-relaxed font-normal"
             />
           </div>
 
           {/* Sample Guidelines Chips */}
           <div className="space-y-1.5">
-            <p className="text-[11px] font-bold text-slate-500 flex items-center space-x-1">
+            <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 flex items-center space-x-1">
               <Lightbulb className="w-3.5 h-3.5 text-amber-500" />
               <span>Sugestões de ajustes:</span>
             </p>
@@ -151,7 +151,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                 <button
                   key={i}
                   onClick={() => setGuidelines(p)}
-                  className="w-full text-left text-[11px] bg-slate-50 hover:bg-indigo-50 hover:text-indigo-900 p-2 rounded-lg border border-slate-200 transition-all text-slate-700"
+                  className="w-full text-left text-[11px] bg-slate-50 dark:bg-slate-800/80 hover:bg-indigo-50 dark:hover:bg-slate-700 hover:text-indigo-900 dark:hover:text-indigo-300 p-2 rounded-lg border border-slate-200 dark:border-slate-700 transition-all text-slate-700 dark:text-slate-300 cursor-pointer"
                 >
                   "{p}"
                 </button>
@@ -161,7 +161,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
 
           {/* Error Banner */}
           {errorMsg && (
-            <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl">
+            <div className="p-3 bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs rounded-xl">
               {errorMsg}
             </div>
           )}
@@ -170,7 +170,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
           <button
             onClick={handleGenerate}
             disabled={isLoading}
-            className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all disabled:opacity-50 text-xs"
+            className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all disabled:opacity-50 text-xs cursor-pointer"
           >
             {isLoading ? (
               <>
@@ -189,8 +189,8 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
           {generatedDraft && (
             <div className="space-y-2 pt-2 animate-fadeIn">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-900 flex items-center space-x-1">
-                  <Check className="w-4 h-4 text-emerald-600" />
+                <span className="text-xs font-bold text-slate-900 dark:text-slate-100 flex items-center space-x-1">
+                  <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Texto Corrigido e Aprimorado</span>
                 </span>
                 <button
@@ -199,14 +199,14 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                     setCopied(true);
                     setTimeout(() => setCopied(false), 2000);
                   }}
-                  className="text-xs text-slate-500 hover:text-indigo-600 flex items-center space-x-1"
+                  className="text-xs text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 flex items-center space-x-1 cursor-pointer"
                 >
                   <Copy className="w-3.5 h-3.5" />
                   <span>{copied ? 'Copiado!' : 'Copiar'}</span>
                 </button>
               </div>
 
-              <div className="p-4 bg-slate-50 rounded-xl border border-slate-300 font-sans text-xs text-slate-800 leading-relaxed max-h-60 overflow-y-auto whitespace-pre-wrap shadow-inner indent-[1.25cm]">
+              <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-300 dark:border-slate-700 font-sans text-xs text-slate-800 dark:text-slate-100 leading-relaxed max-h-60 overflow-y-auto whitespace-pre-wrap shadow-inner indent-[1.25cm]">
                 {generatedDraft}
               </div>
             </div>
@@ -214,10 +214,10 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
+        <div className="p-4 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
           <button
             onClick={onClose}
-            className="text-xs font-semibold text-slate-600 hover:text-slate-900 px-4 py-2"
+            className="text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 px-4 py-2 cursor-pointer"
           >
             Cancelar
           </button>
@@ -225,7 +225,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
           <button
             onClick={handleInsert}
             disabled={!generatedDraft}
-            className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-5 rounded-xl text-xs flex items-center space-x-2 shadow transition-all disabled:opacity-40"
+            className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-5 rounded-xl text-xs flex items-center space-x-2 shadow transition-all disabled:opacity-40 cursor-pointer"
           >
             <span>Aplicar Texto Corrigido no Capítulo</span>
             <ArrowRight className="w-4 h-4" />

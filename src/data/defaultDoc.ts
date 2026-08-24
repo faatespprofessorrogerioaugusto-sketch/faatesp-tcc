@@ -1,13 +1,13 @@
 import { TccDocument } from '../types';
 
-export const getEmptyTccDocument = (_authorName: string = ''): TccDocument => ({
+export const getEmptyTccDocument = (authorName: string = ''): TccDocument => ({
   id: `tcc-${Date.now()}`,
   fontType: 'Arial',
   updatedAt: new Date().toISOString(),
   preTextual: {
     instituicao: '',
     curso: '',
-    autor: '',
+    autor: authorName || '',
     titulo: '',
     subtitulo: '',
     cidade: '',
@@ -24,7 +24,7 @@ export const getEmptyTccDocument = (_authorName: string = ''): TccDocument => ({
       assuntos: [],
       cddCdu: '',
       bibliotecario: '',
-      incluirFicha: true,
+      incluirFicha: false,
     },
     errataEntries: [],
     dataAprovacao: '',
@@ -58,6 +58,13 @@ export const getEmptyTccDocument = (_authorName: string = ''): TccDocument => ({
     {
       id: 'cap-2',
       number: 2,
+      title: 'DESENVOLVIMENTO',
+      content: '',
+      subsections: [],
+    },
+    {
+      id: 'cap-3',
+      number: 3,
       title: 'CONCLUSÃO',
       content: '',
       subsections: [],
@@ -65,161 +72,3 @@ export const getEmptyTccDocument = (_authorName: string = ''): TccDocument => ({
   ],
   references: [],
 });
-
-export const initialTccDocument: TccDocument = {
-  id: 'tcc-1',
-  fontType: 'Arial',
-  updatedAt: new Date().toISOString(),
-  preTextual: {
-    instituicao: 'UNIVERSIDADE FEDERAL DE TECNOLOGIA E CIÊNCIA',
-    curso: 'CURSO DE BACHARELADO EM CIÊNCIA DA COMPUTAÇÃO',
-    autor: '',
-    titulo: 'APLICAÇÃO DE INTELIGÊNCIA ARTIFICIAL E AUTOMAÇÃO NA REDAÇÃO DE TRABALHOS ACADÊMICOS SEGUNDO AS NORMAS ABNT',
-    subtitulo: 'Um estudo de caso sobre produtividade e conformidade normativa',
-    cidade: 'SÃO PAULO',
-    ano: '2026',
-    naturezaTrabalho: 'Monografia apresentada ao Curso de Bacharelado em Ciência da Computação da Universidade Federal de Tecnologia e Ciência como requisito parcial para obtenção do título de Bacharel em Ciência da Computação.',
-    orientador: 'Prof. Dr. Carlos Eduardo Santos',
-    coorientador: 'Profa. Dra. Maria Fernanda Lima',
-    fichaCatalografica: {
-      codigoCutter: 'O48a',
-      autorFormatado: '',
-      cidade: 'São Paulo',
-      ano: '2026',
-      paginas: '85 f. : il.',
-      assuntos: [
-        'Inteligência Artificial',
-        'Automação Acadêmica',
-        'Normas ABNT',
-        'Engenharia de Software',
-        'Redação Científica',
-      ],
-      cddCdu: 'CDU 004.8',
-      bibliotecario: 'Ficha catalográfica elaborada pela Biblioteca Central - CRB-8/1234',
-      incluirFicha: true,
-    },
-    errataEntries: [],
-    dataAprovacao: '15 de Dezembro de 2026',
-    membrosBanca: [
-      {
-        id: '1',
-        name: 'Prof. Dr. Carlos Eduardo Santos',
-        title: 'Orientador - Presidente',
-        institution: 'UFTC',
-      },
-      {
-        id: '2',
-        name: 'Profa. Dra. Ana Paula Ribas',
-        title: 'Membro Interno',
-        institution: 'UFTC',
-      },
-      {
-        id: '3',
-        name: 'Prof. Dr. Roberto Mendes',
-        title: 'Membro Externo',
-        institution: 'USP',
-      },
-    ],
-    dedicatoria: 'Dedico este trabalho aos meus pais, que sempre acreditaram na educação como poder transformador de vidas, e a todos os estudantes universitários em busca de inovação.',
-    agradecimentos: 'Agradeço primeiramente a Deus por conceder a sabedoria e perseverança necessárias durante toda a caminhada acadêmica.\n\nAo meu orientador, Prof. Dr. Carlos Eduardo Santos, por sua paciência, rigor científico e orientações valiosas que enriqueceram esta pesquisa.\n\nAos colegas de curso pelo companheirismo e troca constante de conhecimentos nos laboratórios de programação.\n\nE à minha família, pelo apoio incondicional e incentivo nos momentos mais desafiadores.',
-    epigrafe: {
-      texto: 'A mente que se abre a uma nova idéia jamais voltará ao seu tamanho original.',
-      autor: 'Albert Einstein',
-    },
-    resumo: {
-      texto: 'O presente Trabalho de Conclusão de Curso investiga o impacto do uso de modelos de linguagem e ferramentas de inteligência artificial generativa no processo de estruturação e automação da redação científica acadêmica, sob o prisma das normas ABNT NBR 14724 e NBR 6023. A pesquisa analisa como a automação de elementos pré-textuais, a reindexação dinâmica de capítulos no sumário e a formatação rigorosa de citações reduzem significativamente erros formais em monografias universitárias. Por meio de uma abordagem metodológica mista, combinando revisão bibliográfica e desenvolvimento de protótipo de software em TypeScript e React, avaliou-se o ganho de tempo de estudantes durante a elaboração de trabalhos de conclusão. Os resultados demonstram uma redução de até 70% no tempo gasto exclusivamente na formatação de margens, alinhamentos e listas de referências, permitindo que os discentes concentrem seus esforços no conteúdo substancial e na argumentação científica.',
-      palavrasChave: ['Inteligência Artificial.', 'Automação Acadêmica.', 'Normas ABNT.', 'Engenharia de Software.', 'Redação Científica.'],
-    },
-    abstract: {
-      texto: 'This undergraduate thesis investigates the impact of language models and generative artificial intelligence tools on the structuring and automation process of academic writing under Brazilian ABNT standards NBR 14724 and NBR 6023. The study analyzes how the automation of pre-textual elements, dynamic chapter re-indexing in the table of contents, and rigorous citation formatting significantly reduce formal compliance errors in university monographs. Through a mixed-methodological approach combining literature review and software prototyping in TypeScript and React, the time efficiency gained by students during thesis preparation was evaluated. Results demonstrate up to 70% reduction in time spent exclusively on margins, alignments, and reference formatting, allowing students to focus their efforts on substantial research content and scientific reasoning.',
-      keywords: ['Artificial Intelligence.', 'Academic Automation.', 'ABNT Standards.', 'Software Engineering.', 'Scientific Writing.'],
-    },
-    listaIlustracoes: [
-      { num: 'Figura 1', descricao: 'Arquitetura geral do sistema TCC Maker', pagina: 14 },
-      { num: 'Figura 2', descricao: 'Fluxograma de geração de rascunho com IA', pagina: 18 },
-    ],
-    listaTabelas: [
-      { num: 'Tabela 1', descricao: 'Comparativo de tempo gasto na formatação ABNT', pagina: 22 },
-    ],
-    listaSiglas: [
-      { sigla: 'ABNT', significado: 'Associação Brasileira de Normas Técnicas' },
-      { sigla: 'IA', significado: 'Inteligência Artificial' },
-      { sigla: 'NBR', significado: 'Norma Brasileira Regulamentadora' },
-      { sigla: 'TCC', significado: 'Trabalho de Conclusão de Curso' },
-      { sigla: 'UI/UX', significado: 'Interface de Usuário e Experiência do Usuário' },
-    ],
-  },
-  chapters: [
-    {
-      id: 'cap-1',
-      number: 1,
-      title: 'INTRODUÇÃO',
-      content: 'A elaboração de um Trabalho de Conclusão de Curso (TCC) representa uma etapa determinante na formação de estudantes do ensino superior no Brasil. No entanto, grande parte do tempo e esforço dos graduandos é frequentemente consumida pela complexidade mecânica da adequação às normas da Associação Brasileira de Normas Técnicas (ABNT), tais como a NBR 14724 para estrutura do documento e a NBR 6023 para referências bibliográficas.\n\nDiante desse cenário, a integração de tecnologias modernas de desenvolvimento web combinadas a modelos de inteligência artificial surge como uma solução promissora para desonerar os estudantes de tarefas repetitivas de formatação, garantindo precisão geométrica de margens, paginação automática a partir dos elementos textuais e vinculação em tempo real do sumário.\n\nO objetivo geral deste trabalho consiste em projetar, implementar e validar uma plataforma web denominada TCC Maker, capaz de automatizar a formatação ABNT, oferecer assistente de redação científica baseado em IA e exportar o documento consolidado em formatos Word (.docx) e PDF.',
-      subsections: [
-        {
-          id: 'sub-1-1',
-          number: '1.1',
-          title: 'Problematização e Justificativa',
-          content: 'Erros de formatação ABNT constituem uma das principais causas de devolução ou perda de pontos em bancas examinadoras. A falta de padronização em processadores de texto convencionais costuma provocar quebras de páginas desalinhadas e numeração incorreta em sumários.',
-        },
-        {
-          id: 'sub-1-2',
-          number: '1.2',
-          title: 'Objetivos Específicos',
-          content: 'a) Mapear os requisitos estritos da norma ABNT NBR 14724;\nb) Desenvolver um algoritmo de reindexação automática de capítulos e seções;\nc) Integrar assistente de inteligência artificial para apoio na escrita imparcial e impessoal;\nd) Disponibilizar gerador e organizador de citações segundo a NBR 6023.',
-        },
-      ],
-    },
-    {
-      id: 'cap-2',
-      number: 2,
-      title: 'CONCLUSÃO',
-      content: 'A partir dos resultados obtidos no desenvolvimento da plataforma TCC Maker, conclui-se que a automação das regras estritas da ABNT e a integração de modelos de inteligência artificial generativa proporcionam um ganho substancial na produtividade do discente durante a elaboração de trabalhos acadêmicos.\n\nConstatou-se que a padronização automática dos elementos pré-textuais, aliada à reindexação dinâmica de capítulos no sumário e à formatação de referências bibliográficas segundo a NBR 6023, elimina erros formais recorrentes e reduz significativamente o tempo dispendido na formatação.\n\nComo trabalhos futuros, recomenda-se a expansão da plataforma para suporte a outras normas internacionais de citação, como APA e Vancouver, além do aprimoramento contínuo dos modelos de auxílio à escrita acadêmica.',
-      subsections: [
-        {
-          id: 'sub-2-1',
-          number: '2.1',
-          title: 'Considerações Finais e Trabalhos Futuros',
-          content: 'O protótipo atendeu satisfatoriamente a todos os requisitos estipulados, demonstrando a viabilidade técnica da aplicação de inteligência artificial para o suporte à escrita científica no ensino superior.',
-        },
-      ],
-    },
-  ],
-  references: [
-    {
-      id: 'ref-1',
-      type: 'livro',
-      autor: 'SILVA, João Pedro',
-      titulo: 'Metodologia da Pesquisa Científica e Formatação ABNT',
-      edicao: '4',
-      local: 'São Paulo',
-      editora: 'Editora Acadêmica',
-      ano: '2020',
-      formattedText: 'SILVA, João Pedro. Metodologia da Pesquisa Científica e Formatação ABNT. 4. ed. São Paulo: Editora Acadêmica, 2020.',
-    },
-    {
-      id: 'ref-2',
-      type: 'artigo',
-      autor: 'SANTOS, Carlos Eduardo; OLIVEIRA, Maria Clara',
-      titulo: 'Inteligência Artificial no Ensino Superior: Desafios e Oportunidades',
-      periodico: 'Revista Brasileira de Informática na Educação',
-      local: 'Porto Alegre',
-      volume: '30',
-      numero: '2',
-      paginas: '45-62',
-      ano: '2022',
-      formattedText: 'SANTOS, Carlos Eduardo; OLIVEIRA, Maria Clara. Inteligência Artificial no Ensino Superior: Desafios e Oportunidades. Revista Brasileira de Informática na Educação, Porto Alegre, v. 30, n. 2, p. 45-62, 2022.',
-    },
-    {
-      id: 'ref-3',
-      type: 'site',
-      autor: 'ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS',
-      titulo: 'NBR 14724: Informação e documentação - Trabalhos acadêmicos - Apresentação',
-      periodico: 'ABNT',
-      ano: '2021',
-      url: 'https://www.abnt.org.br',
-      dataAcesso: '10 nov. 2025',
-      formattedText: 'ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 14724: Informação e documentação - Trabalhos acadêmicos - Apresentação. ABNT, 2021. Disponível em: <https://www.abnt.org.br>. Acesso em: 10 nov. 2025.',
-    },
-  ],
-};

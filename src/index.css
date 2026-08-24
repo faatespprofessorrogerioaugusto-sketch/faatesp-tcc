@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -8,6 +10,15 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+/* Base Body Styles */
+html.dark {
+  color-scheme: dark;
+}
+
+html {
+  color-scheme: light;
 }
 
 /* Print Rules for ABNT PDF Exports */
