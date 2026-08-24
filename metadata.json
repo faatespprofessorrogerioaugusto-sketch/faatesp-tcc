@@ -1,0 +1,8 @@
+{
+  "name": "Remix TCC Maker - Gerador ABNT",
+  "description": "Gerador e Editor de TCC e Monografias no padrão ABNT com assistente de IA, banco de citações e exportação para Word e PDF.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
