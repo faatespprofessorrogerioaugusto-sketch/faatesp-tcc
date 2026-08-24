@@ -15,6 +15,8 @@
   body {
     background: white !important;
     color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   header, footer, nav, button, .print\:hidden {
@@ -25,11 +27,22 @@
     padding: 0 !important;
     margin: 0 !important;
     max-width: 100% !important;
+    width: 100% !important;
   }
 
   @page {
     size: A4 portrait;
     margin: 0;
+  }
+
+  .abnt-sheet {
+    page-break-after: always !important;
+    break-after: page !important;
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    min-height: 297mm !important;
+    margin: 0 !important;
   }
 }
 

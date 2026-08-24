@@ -35,10 +35,11 @@ export const AbntPreview: React.FC<AbntPreviewProps> = ({ doc, onPrintPdf }) => 
 
         <button
           onClick={onPrintPdf}
-          className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow flex items-center space-x-2 transition-all shrink-0"
+          className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow flex items-center space-x-2 transition-all shrink-0 cursor-pointer"
+          title="Baixar arquivo PDF formatado em ABNT"
         >
           <Printer className="w-4 h-4" />
-          <span>Imprimir / Gerar PDF ABNT</span>
+          <span>Baixar PDF ABNT</span>
         </button>
       </div>
 
@@ -54,11 +55,11 @@ export const AbntPreview: React.FC<AbntPreviewProps> = ({ doc, onPrintPdf }) => 
       </div>
 
       {/* Printable / Visual A4 Document Sheets Container */}
-      <div className="flex flex-col items-center space-y-8 py-4 bg-slate-200/70 p-4 sm:p-8 rounded-3xl overflow-x-auto print:bg-white print:p-0">
+      <div className="flex flex-col items-center space-y-8 py-4 bg-slate-200/70 p-4 sm:p-8 rounded-3xl overflow-x-auto print:bg-white print:p-0 print:space-y-0">
         
         {/* SHEET 1: CAPA */}
         <div
-          className={`bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative flex flex-col justify-between border border-slate-300 ${fontClass} print:shadow-none print:w-full print:p-0`}
+          className={`abnt-sheet bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative flex flex-col justify-between border border-slate-300 ${fontClass} print:shadow-none print:w-full print:border-none print:p-[30mm_20mm_20mm_30mm]`}
         >
           {/* No Page Number on Capa */}
 
@@ -92,7 +93,7 @@ export const AbntPreview: React.FC<AbntPreviewProps> = ({ doc, onPrintPdf }) => 
 
         {/* SHEET 2: FOLHA DE ROSTO (PÁGINA 1 CONTADA - NÚMERO OCULTO) */}
         <div
-          className={`bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative flex flex-col justify-between border border-slate-300 ${fontClass} print:shadow-none print:w-full`}
+          className={`abnt-sheet bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative flex flex-col justify-between border border-slate-300 ${fontClass} print:shadow-none print:w-full print:border-none print:p-[30mm_20mm_20mm_30mm]`}
         >
           {/* Page Number Label (Invisible in Print, Indicator in Preview) */}
           <div className="absolute top-4 right-6 text-[10px] text-slate-400 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 print:hidden">
@@ -125,7 +126,7 @@ export const AbntPreview: React.FC<AbntPreviewProps> = ({ doc, onPrintPdf }) => 
         {/* SHEET 2.5: FICHA CATALOGRÁFICA (VERSO DA FOLHA DE ROSTO - ABNT NBR 14724) */}
         {fichaData.incluirFicha && (
           <div
-            className={`bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative flex flex-col justify-end pb-16 border border-slate-300 ${fontClass} print:shadow-none print:w-full`}
+            className={`abnt-sheet bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative flex flex-col justify-end pb-16 border border-slate-300 ${fontClass} print:shadow-none print:w-full print:border-none print:p-[30mm_20mm_20mm_30mm]`}
           >
             <div className="absolute top-4 right-6 text-[10px] text-slate-400 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 print:hidden">
               Verso da Folha de Rosto (Oculta por regra ABNT)
@@ -154,7 +155,7 @@ export const AbntPreview: React.FC<AbntPreviewProps> = ({ doc, onPrintPdf }) => 
 
         {/* SHEET 3: FOLHA DE APROVAÇÃO (PÁGINA CONTADA - NÚMERO OCULTO) */}
         <div
-          className={`bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative flex flex-col justify-between border border-slate-300 ${fontClass} print:shadow-none print:w-full`}
+          className={`abnt-sheet bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative flex flex-col justify-between border border-slate-300 ${fontClass} print:shadow-none print:w-full print:border-none print:p-[30mm_20mm_20mm_30mm]`}
         >
           <div className="absolute top-4 right-6 text-[10px] text-slate-400 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 print:hidden">
             Pag. 2 (Oculta por regra ABNT)
@@ -188,7 +189,7 @@ export const AbntPreview: React.FC<AbntPreviewProps> = ({ doc, onPrintPdf }) => 
 
         {/* SHEET 4: RESUMO EM PORTUGUÊS (NÚMERO OCULTO) */}
         <div
-          className={`bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative space-y-6 border border-slate-300 ${fontClass} print:shadow-none print:w-full`}
+          className={`abnt-sheet bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative space-y-6 border border-slate-300 ${fontClass} print:shadow-none print:w-full print:border-none print:p-[30mm_20mm_20mm_30mm]`}
         >
           <div className="absolute top-4 right-6 text-[10px] text-slate-400 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 print:hidden">
             Pag. Pré-Textual (Oculta)
@@ -207,7 +208,7 @@ export const AbntPreview: React.FC<AbntPreviewProps> = ({ doc, onPrintPdf }) => 
 
         {/* SHEET 5: SUMÁRIO DINÂMICO (COM PONTOS DE PREENCHIMENTO E PÁGINAS CORRESPONDENTES) */}
         <div
-          className={`bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative space-y-6 border border-slate-300 ${fontClass} print:shadow-none print:w-full`}
+          className={`abnt-sheet bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative space-y-6 border border-slate-300 ${fontClass} print:shadow-none print:w-full print:border-none print:p-[30mm_20mm_20mm_30mm]`}
         >
           <div className="absolute top-4 right-6 text-[10px] text-slate-400 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 print:hidden">
             Pag. Pré-Textual (Oculta)
@@ -253,7 +254,7 @@ export const AbntPreview: React.FC<AbntPreviewProps> = ({ doc, onPrintPdf }) => 
           return (
             <div
               key={ch.id}
-              className={`bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative space-y-6 border border-slate-300 ${fontClass} print:shadow-none print:w-full`}
+              className={`abnt-sheet bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative space-y-6 border border-slate-300 ${fontClass} print:shadow-none print:w-full print:border-none print:p-[30mm_20mm_20mm_30mm]`}
             >
               {/* PAGE NUMBER VISIBLE IN ARABIC NUMERALS SIZE 10 AT TOP RIGHT CORNER! */}
               <div className="absolute top-[15mm] right-[20mm] font-mono text-[10pt] font-bold text-slate-900">
@@ -291,7 +292,7 @@ export const AbntPreview: React.FC<AbntPreviewProps> = ({ doc, onPrintPdf }) => 
 
         {/* SHEET LAST: REFERÊNCIAS BIBLIOGRÁFICAS (PAGE NUMBER VISIBLE) */}
         <div
-          className={`bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative space-y-6 border border-slate-300 ${fontClass} print:shadow-none print:w-full`}
+          className={`abnt-sheet bg-white shadow-2xl rounded-sm w-[210mm] min-h-[297mm] p-[30mm_20mm_20mm_30mm] text-slate-900 relative space-y-6 border border-slate-300 ${fontClass} print:shadow-none print:w-full print:border-none print:p-[30mm_20mm_20mm_30mm]`}
         >
           <div className="absolute top-[15mm] right-[20mm] font-mono text-[10pt] font-bold text-slate-900">
             {pageMap.referencesPage}

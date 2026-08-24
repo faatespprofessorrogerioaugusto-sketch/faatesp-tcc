@@ -271,7 +271,7 @@ export async function exportTccToDocx(doc: TccDocument): Promise<Blob> {
           children: [
             new TableCell({
               borders: {
-                top: { style: BorderStyle.NONE, size: 0, color: 'AUTO' },
+                top: { style: BorderStyle.NONE, size: 0, color: '000000' },
                 bottom: { style: BorderStyle.SINGLE, size: 12, color: '000000' },
                 left: { style: BorderStyle.SINGLE, size: 12, color: '000000' },
                 right: { style: BorderStyle.SINGLE, size: 12, color: '000000' },

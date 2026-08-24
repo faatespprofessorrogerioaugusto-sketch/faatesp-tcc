@@ -124,20 +124,22 @@ export const Header: React.FC<HeaderProps> = ({
             {user.isLoggedIn && (
               <div className="flex items-center space-x-2">
                 <button
+                  type="button"
                   onClick={onExportDocx}
-                  className="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-sm transition-all border border-blue-400/30"
-                  title="Baixar em formato Word (.docx) formatado em ABNT"
+                  className="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-sm transition-all border border-blue-400/30 cursor-pointer"
+                  title="Baixar arquivo DOCX formatado em ABNT"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">DOCX</span>
+                  <span>DOCX</span>
                 </button>
                 <button
+                  type="button"
                   onClick={onExportPdf}
-                  className="flex items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-sm transition-all border border-emerald-400/30"
-                  title="Gerar PDF para impressão ABNT"
+                  className="flex items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-sm transition-all border border-emerald-400/30 cursor-pointer"
+                  title="Baixar arquivo PDF formatado em ABNT"
                 >
                   <FileCheck className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">PDF</span>
+                  <span>PDF</span>
                 </button>
               </div>
             )}

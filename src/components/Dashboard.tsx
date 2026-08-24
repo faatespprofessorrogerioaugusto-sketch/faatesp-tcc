@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TccDocument } from '../types';
 import { calculateProgress } from '../utils/abntFormatter';
 import {
@@ -13,6 +13,8 @@ import {
   TrendingUp,
   Download,
   Check,
+  Printer,
+  Loader2,
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -264,36 +266,42 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </button>
         </div>
 
-        {/* Card 6: Exportação Avançada */}
+        {/* Card 6: Exportação Direta */}
         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-200 shadow-sm flex flex-col justify-between space-y-4">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <div className="bg-blue-600 text-white p-2.5 rounded-xl">
+              <div className="bg-blue-600 text-white p-2.5 rounded-xl shadow-sm">
                 <Download className="w-5 h-5" />
               </div>
-              <span className="text-xs bg-blue-600 text-white font-semibold px-2.5 py-1 rounded-full">
-                Pronto para Envio
+              <span className="text-xs bg-blue-600 text-white font-semibold px-2.5 py-1 rounded-full shadow-xs">
+                Exportação Direta
               </span>
             </div>
             <div>
-              <h4 className="font-bold text-slate-900 text-sm">Exportação Word e PDF</h4>
+              <h4 className="font-bold text-slate-900 text-sm">Baixar DOCX & PDF</h4>
               <p className="text-xs text-slate-600 mt-1">
-                Baixe seu trabalho compilado em .docx ou PDF mantendo todas as margens ABNT (3cm superior/esquerda, 2cm inferior/direita).
+                Gere e baixe seu trabalho compilado diretamente mantendo todas as normas e margens ABNT NBR 14724.
               </p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2">
             <button
+              type="button"
               onClick={onExportDocx}
-              className="text-xs bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-2 rounded-lg transition-all text-center"
+              className="text-xs bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold py-2.5 px-3 rounded-lg shadow-sm transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+              title="Baixar arquivo DOCX formatado em ABNT"
             >
-              Baixar Word
+              <FileText className="w-4 h-4" />
+              <span>Baixar DOCX</span>
             </button>
             <button
+              type="button"
               onClick={onExportPdf}
-              className="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2 px-2 rounded-lg transition-all text-center"
+              className="text-xs bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold py-2.5 px-3 rounded-lg shadow-sm transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+              title="Baixar arquivo PDF formatado em ABNT"
             >
-              Baixar PDF
+              <Download className="w-4 h-4" />
+              <span>Baixar PDF</span>
             </button>
           </div>
         </div>

@@ -9,8 +9,8 @@ import { ReferenceManager } from './components/ReferenceManager';
 import { AbntPreview } from './components/AbntPreview';
 import { AiAssistantModal } from './components/AiAssistantModal';
 import { LoginPage } from './components/LoginPage';
-import { ExportModal } from './components/ExportModal';
 import { exportTccToDocx } from './utils/docxExport';
+import { downloadTccPdf } from './utils/pdfExport';
 
 export default function App() {
   const [doc, setDoc] = useState<TccDocument>(getEmptyTccDocument());
@@ -23,9 +23,6 @@ export default function App() {
     avatarUrl: '',
     isLoggedIn: false,
   });
-
-  // Modal Controls
-  const [isExportOpen, setIsExportOpen] = useState(false);
 
   // AI Assistant Drawer State
   const [aiModal, setAiModal] = useState<{
@@ -157,8 +154,13 @@ export default function App() {
     });
   };
 
-  const handlePrintPdf = () => {
-    window.print();
+  const handleDirectDownloadPdf = async () => {
+    try {
+      await downloadTccPdf(doc);
+    } catch (err) {
+      console.error('Erro ao gerar o download do PDF:', err);
+      alert('Não foi possível gerar o PDF. Verifique se os dados estão preenchidos.');
+    }
   };
 
   const handleDirectDownloadDocx = async () => {
@@ -167,14 +169,17 @@ export default function App() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${doc.preTextual.titulo || 'TCC_ABNT'}.docx`;
+      const cleanTitle = (doc.preTextual.titulo?.trim() || 'TCC')
+        .replace(/[/\\?%*:|"<>]/g, '_')
+        .trim();
+      a.download = `${cleanTitle}_ABNT.docx`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch (err) {
-      console.error(err);
-      alert('Erro ao exportar Word (.docx).');
+      console.error('Erro ao exportar Word (.docx):', err);
+      alert('Erro ao exportar Word (.docx). Tente novamente.');
     }
   };
 
@@ -187,8 +192,8 @@ export default function App() {
         user={user}
         onOpenLogin={() => setActiveTab('login')}
         onLogout={handleLogout}
-        onExportDocx={() => setIsExportOpen(true)}
-        onExportPdf={handlePrintPdf}
+        onExportDocx={handleDirectDownloadDocx}
+        onExportPdf={handleDirectDownloadPdf}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
@@ -209,8 +214,8 @@ export default function App() {
                 doc={doc}
                 onNavigateTab={(tab) => setActiveTab(tab)}
                 onOpenAiAssistant={handleOpenAiAssistant}
-                onExportDocx={() => setIsExportOpen(true)}
-                onExportPdf={handlePrintPdf}
+                onExportDocx={handleDirectDownloadDocx}
+                onExportPdf={handleDirectDownloadPdf}
               />
             )}
 
@@ -240,7 +245,7 @@ export default function App() {
             )}
 
             {activeTab === 'preview' && (
-              <AbntPreview doc={doc} onPrintPdf={handlePrintPdf} />
+              <AbntPreview doc={doc} onPrintPdf={handleDirectDownloadPdf} />
             )}
           </>
         )}
@@ -251,19 +256,12 @@ export default function App() {
         <p className="font-semibold text-slate-300">
           TCC Maker - FAATESP — Sistema de Formatação Acadêmica ABNT NBR 14724 & NBR 6023
         </p>
-        <p className="text-slate-500 mt-1">
-          Todos os direitos reservados • Rogério Augusto Fernandes
+        <p className="text-slate-400 mt-1 font-bold">
+          Todos os direitos reservados • MISTER ROGER
         </p>
       </footer>
 
       {/* Modals & Lateral Drawers */}
-      <ExportModal
-        isOpen={isExportOpen}
-        onClose={() => setIsExportOpen(false)}
-        doc={doc}
-        onPrintPdf={handlePrintPdf}
-      />
-
       <AiAssistantModal
         isOpen={aiModal.isOpen}
         onClose={() => setAiModal((prev) => ({ ...prev, isOpen: false }))}
