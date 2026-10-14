@@ -18,6 +18,11 @@ export const NATUREZA_OPTIONS = [
   },
 ];
 
+export const ORIENTADORES_PREDEFINIDOS = [
+  'Profa. Marines Borba',
+  'Prof. Rogério Augusto Fernandes',
+];
+
 interface PreTextualEditorProps {
   data: PreTextualData;
   onChange: (data: PreTextualData) => void;
@@ -30,6 +35,7 @@ export const PreTextualEditor: React.FC<PreTextualEditorProps> = ({ data, onChan
   const [palavrasChaveRaw, setPalavrasChaveRaw] = useState<string | null>(null);
   const [keywordsRaw, setKeywordsRaw] = useState<string | null>(null);
   const [assuntosRaw, setAssuntosRaw] = useState<string | null>(null);
+  const [isCustomOrientador, setIsCustomOrientador] = useState<boolean>(false);
 
   const selectCursoNatureza = (opt: (typeof NATUREZA_OPTIONS)[0]) => {
     onChange({
@@ -359,14 +365,51 @@ export const PreTextualEditor: React.FC<PreTextualEditorProps> = ({ data, onChan
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Nome do Orientador</label>
-                  <input
-                    type="text"
-                    value={data.orientador}
-                    onChange={(e) => updateField('orientador', e.target.value)}
-                    placeholder="Ex: Prof. Wanderley Luxemborgo da Silva"
-                    className="w-full text-xs p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500 font-normal"
-                  />
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Nome do Orientador</label>
+                    <span className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">
+                      Caixa de seleção
+                    </span>
+                  </div>
+                  <select
+                    value={
+                      isCustomOrientador
+                        ? '__custom__'
+                        : ORIENTADORES_PREDEFINIDOS.includes(data.orientador || '')
+                        ? data.orientador
+                        : data.orientador
+                        ? '__custom__'
+                        : ''
+                    }
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === '__custom__') {
+                        setIsCustomOrientador(true);
+                      } else {
+                        setIsCustomOrientador(false);
+                        updateField('orientador', val);
+                      }
+                    }}
+                    className="w-full text-xs p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 font-normal cursor-pointer"
+                  >
+                    <option value="">Selecione o(a) orientador(a)...</option>
+                    {ORIENTADORES_PREDEFINIDOS.map((orientador) => (
+                      <option key={orientador} value={orientador}>
+                        {orientador}
+                      </option>
+                    ))}
+                    <option value="__custom__">Outro orientador (digitar manualmente)...</option>
+                  </select>
+
+                  {(isCustomOrientador || (!ORIENTADORES_PREDEFINIDOS.includes(data.orientador || '') && Boolean(data.orientador))) && (
+                    <input
+                      type="text"
+                      value={data.orientador || ''}
+                      onChange={(e) => updateField('orientador', e.target.value)}
+                      placeholder="Digite o nome completo do orientador"
+                      className="w-full text-xs p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500 font-normal mt-1.5"
+                    />
+                  )}
                 </div>
 
                 <div className="space-y-1.5">
@@ -483,16 +526,53 @@ export const PreTextualEditor: React.FC<PreTextualEditorProps> = ({ data, onChan
               </div>
 
               <div className="space-y-1.5 md:col-span-2">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                  Orientador(a)
-                </label>
-                <input
-                  type="text"
-                  value={data.orientador || ''}
-                  onChange={(e) => updateField('orientador', e.target.value)}
-                  placeholder="Ex: Prof. Wanderley Luxemborgo da Silva"
-                  className="w-full text-xs p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500 font-normal"
-                />
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                    Orientador(a)
+                  </label>
+                  <span className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">
+                    Caixa de seleção
+                  </span>
+                </div>
+                <select
+                  value={
+                    isCustomOrientador
+                      ? '__custom__'
+                      : ORIENTADORES_PREDEFINIDOS.includes(data.orientador || '')
+                      ? data.orientador
+                      : data.orientador
+                      ? '__custom__'
+                      : ''
+                  }
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === '__custom__') {
+                      setIsCustomOrientador(true);
+                    } else {
+                      setIsCustomOrientador(false);
+                      updateField('orientador', val);
+                    }
+                  }}
+                  className="w-full text-xs p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 font-normal cursor-pointer"
+                >
+                  <option value="">Selecione o(a) orientador(a)...</option>
+                  {ORIENTADORES_PREDEFINIDOS.map((orientador) => (
+                    <option key={orientador} value={orientador}>
+                      {orientador}
+                    </option>
+                  ))}
+                  <option value="__custom__">Outro orientador (digitar manualmente)...</option>
+                </select>
+
+                {(isCustomOrientador || (!ORIENTADORES_PREDEFINIDOS.includes(data.orientador || '') && Boolean(data.orientador))) && (
+                  <input
+                    type="text"
+                    value={data.orientador || ''}
+                    onChange={(e) => updateField('orientador', e.target.value)}
+                    placeholder="Digite o nome completo do orientador(a)"
+                    className="w-full text-xs p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500 font-normal mt-1.5"
+                  />
+                )}
               </div>
 
               <div className="space-y-1.5 md:col-span-2">
